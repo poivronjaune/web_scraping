@@ -76,6 +76,7 @@ print(f"\n\n\n\n\n ------- COMPANY INFORMATION ------")
 #    print(f"neq: {cells[0].text}, statut:{cells[4].text}, nom:{cells[1].text}, adresse: {cells[3].text}")
 for company in results:
     print(company)
+    
 
 
 
