@@ -14,6 +14,7 @@ import time
 # Load environment variables
 load_dotenv()
 
+
 #CHROME_DRIVER_LOCATION = "C:\<path>\chromedriver.exe"
 CHROME_DRIVER_LOCATION = os.environ['CHROME_DRIVER_LOCATION']
 url = "https://www.registreentreprises.gouv.qc.ca/RQAnonymeGR/GR/GR03/GR03A2_19A_PIU_RechEnt_PC/PageRechSimple.aspx?T1.CodeService=S00436&Clng=F&WT.co_f=2d06b7e3a15d2e0ab951627138812422"
@@ -53,12 +54,28 @@ except:
 datagrid = driver.find_element_by_class_name("datagrid")
 companies = datagrid.find_elements_by_tag_name("tr")[1:]
 
+results = []
+for company in companies:
+    data = {}
+    cells = company.find_elements_by_tag_name("td")
+    data["neq"]        = cells[0].text
+    data["statut"]     = cells[5].text
+    data["creation"]   = cells[6].text
+    data["changement"] = cells[4].text
+    data["nom"]        = cells[1].text
+    data["adresse"]    = cells[2].text
+    results.append(data)
+
+
+
+
 
 print(f"\n\n\n\n\n ------- COMPANY INFORMATION ------")
-for company in companies:
-    cells = company.find_elements_by_tag_name("td")
-    print(f"neq: {cells[0].text}, statut:{cells[4].text}, nom:{cells[1].text}, adresse: {cells[3].text}")
-
+#for company in companies:
+#    cells = company.find_elements_by_tag_name("td")
+#    print(f"neq: {cells[0].text}, statut:{cells[4].text}, nom:{cells[1].text}, adresse: {cells[3].text}")
+for company in results:
+    print(company)
 
 
 
