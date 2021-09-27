@@ -15,7 +15,7 @@ This repo is free to fork or download, it is a selenium and beautiful soup learn
 ### 2021-09-24 Features
 - req.py contains python code to extract company information from the corresponding public web site (only returns data from the first page)  
 - This script controls a Chrome Browser on your local machine
-- Save features to csv. json, excel
+- Save features to csv, json, excel
 
 #### Upcomimg features
 - Extract owners and managers from detailed information
