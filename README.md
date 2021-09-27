@@ -19,7 +19,6 @@ This repo is free to fork or download, it is a selenium and beautiful soup learn
 
 #### Upcomimg features
 - Extract owners and managers from detailed information
-- Return data as a json object 
 
 #### Installation
 `git clone https://github.com/poivronjaune/web_scraping.git ` : Clone this repo to your workspace  
