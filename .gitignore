@@ -144,3 +144,8 @@ cython_debug/
 # Dummy folders
 IGNORE/
 LOGS/
+
+# Saved Files
+.csv
+.json
+.xlsx
