@@ -17,7 +17,6 @@ This repo is free to fork or download, it is a selenium and beautiful soup learn
 - This script controls a Chrome Browser on your local machine
 
 #### Upcomimg features
-- Loop though all pages of company information
 - Extract owners and managers from detailed information
 - Return data as a json object 
 
@@ -38,7 +37,7 @@ Once installation is complete, run ` python req.py <search_str>`. The script wil
 - open a Chrome Web Browser
 - enter the <search_str> in the web site form
 - automatically submit the form
-- extract all company information found (first page only)  
+- extract all company information found (loops through all pages available)  
 - display results on command line
 - wait for user to press ENTER then close the controlled browser
 
