@@ -1,7 +1,7 @@
 import logging
 import os
 import sys
-from req_scraper import req
+from req import req
 
 
 def setup_logging():
@@ -47,3 +47,6 @@ print(f"Searched string : {company_to_search} \n")
 for company in results:
     print(company)
 
+scraper.driver.minimize_window()
+input("Press ENTER to close the controlled Web Browser...")
+scraper.driver.quit()

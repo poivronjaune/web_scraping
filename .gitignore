@@ -142,4 +142,5 @@ cython_debug/
 .vscode/
 
 # Dummy folders
-/IGNORE
+IGNORE/
+LOGS/
