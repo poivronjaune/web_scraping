@@ -29,7 +29,6 @@ def setup_logging():
 # app_logger = setup_logging()
 
 
-
 # Read command line search string or use default value
 company_to_search = "CHEZ ASHTON"  # Local fast food restaurant serving great poutine :)
 if len(sys.argv) > 1:
@@ -39,6 +38,9 @@ if len(sys.argv) > 1:
 # Instantiate a req scraper and extract company data
 scraper = req(loglevel=logging.DEBUG)
 results = scraper.get_companies(company_to_search)
+scraper.save_results_to_csv(company_to_search)
+scraper.save_results_to_json(company_to_search)
+scraper.save_results_to_excel(company_to_search)
 
 
 # Display results on command line
@@ -47,6 +49,10 @@ print(f"Searched string : {company_to_search} \n")
 for company in results:
     print(company)
 
+
+
+
 scraper.driver.minimize_window()
-input("Press ENTER to close the controlled Web Browser...")
+# input("Press ENTER to close the controlled Web Browser...")
 scraper.driver.quit()
+

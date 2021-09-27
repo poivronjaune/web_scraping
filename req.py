@@ -4,6 +4,7 @@ import os
 import sys
 import logging
 import math
+import pandas as pd
 from dotenv import load_dotenv
 
 from selenium import webdriver
@@ -20,6 +21,8 @@ class req:
         self.BASE_URL = os.environ["BASE_URL"]  # Main REQ URL to enter search string
         self.driver = None                      # Holder for Chrome Browser driver
         self.logger = None                      # Holder for the logging system
+        self.data = None                        # Holder for company data
+        self.search_term = None                 # Holder for search term
 
         self.setup_logging(loglevel)
         self.setup_browser_driver()
@@ -54,9 +57,6 @@ class req:
             self.driver = None
             self.logger.debug(f"Unable to open Chrome Browser, {e} ")
 
-
-
-
     def open_base_url(self):
         try:
             self.driver.get(self.BASE_URL)
@@ -65,10 +65,11 @@ class req:
             self.logger.debug(f"Unable to open base URL, {e}")
 
     def send_search_string(self, company_to_search):
+        self.search_term = company_to_search
         # Send a company name into the search box of the page
         search_box_xpath = '//*[@id="CPH_K1ZoneContenu1_Cadr_IdSectionRechSimple_IdSectionRechSimple_K1Fieldset1_ChampRecherche__cs"]'
         search_box = self.driver.find_element_by_xpath(search_box_xpath)
-        search_box.send_keys(company_to_search)
+        search_box.send_keys(self.search_term)
 
         # Click the accept conditions check box
         check_box_xpath = '//*[@id="CPH_K1ZoneContenu1_Cadr_IdSectionRechSimple_IdSectionRechSimple_CondUtil_CaseConditionsUtilisation_0"]'
@@ -101,11 +102,11 @@ class req:
         return total
 
 
-    # #############################################
-    #
-    #  Main method to call from external program
-    #
-    # #############################################
+    # ###########################################
+    #                                           #
+    #  Methods to call from external program    #
+    #                                           #
+    # ###########################################
     def get_companies(self, search_str):
         self.open_base_url()
         self.send_search_string(search_str)
@@ -113,6 +114,7 @@ class req:
         
         if total_found > 0 and total_found <= 10 :
             data = self.extract_companies_from_html()
+            self.logger.info(f"One page of DATA extracted from REQ Site, total records: {total_found}")
         elif total_found > 10:
             total_pages = math.ceil(total_found / 10)
             # Automatically extract page 1, then proceed by loop for all other pages
@@ -122,9 +124,12 @@ class req:
                 self.select_results_page(page_num)
                 page_data = self.extract_companies_from_html()
                 data.extend(page_data)
+            self.logger.info(f"{total_pages} pages of DATA extracted from REQ Site, total records: {total_found}")
         else:
             data = []
+            self.logger.info(f"No DATA extracted from REQ Site, total records: 0")
 
+        self.data = data
         return data
 
     def extract_companies_from_html(self):
@@ -154,3 +159,33 @@ class req:
         page_link = page_navigator_element.find_element_by_link_text(str(page_num))        
         page_link.click()
 
+    def save_results_to_csv(self, filename):
+        if self.data != None:
+            #TODO: check if filename argument contains an extension
+            file_name = f"{filename}.csv"
+            df = pd.DataFrame(self.data)
+            df.to_csv(file_name, encoding='utf-8', index=False)
+            self.logger.info(f"Data saved to file: {file_name}")
+        else:
+            self.logger.info(f"No Data saved to file.")
+
+    def save_results_to_json(self, filename):
+        if self.data != None:
+            #TODO: check if filename argument contains an extension
+            file_name = f"{filename}.json"
+            df = pd.DataFrame(self.data)
+            df.to_json(file_name, orient='records', force_ascii=False)
+            self.logger.info(f"Data saved to file: {file_name}")
+        else:
+            self.logger.info(f"No Data saved to file.")
+
+    def save_results_to_excel(self, filename):
+        if self.data != None:
+            #TODO: check if filename argument contains an extension
+            file_name = f"{filename}.xlsx"
+            df = pd.DataFrame(self.data)
+            df.to_excel(file_name, encoding='utf-8')
+            self.logger.info(f"Data saved to file: {file_name}")
+        else:
+            self.logger.info(f"No Data saved to file.")
+         
