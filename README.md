@@ -15,6 +15,7 @@ This repo is free to fork or download, it is a selenium and beautiful soup learn
 ### 2021-09-24 Features
 - req.py contains python code to extract company information from the corresponding public web site (only returns data from the first page)  
 - This script controls a Chrome Browser on your local machine
+- Save features to csv. json, excel
 
 #### Upcomimg features
 - Extract owners and managers from detailed information
@@ -33,7 +34,7 @@ The [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/download
 
 
 #### Usage
-Once installation is complete, run ` python req.py <search_str>`. The script will:  
+Once installation is complete, run ` python app.py <search_str>`. The script will:  
 - open a Chrome Web Browser
 - enter the <search_str> in the web site form
 - automatically submit the form
@@ -48,6 +49,8 @@ Once installation is complete, run ` python req.py <search_str>`. The script wil
 ` selenium ` : pyhton package to extract data from web sites  
 ` beautifulsoup4 ` : pyhton package to extract information from html web pages    
 ` requests ` : pyhton package offering a simple python HTTP libray  
-` lxml ` : pyhton package offering XML processing library    
-
+` lxml ` : pyhton package offering XML processing library 
+` pandas ` : python library to manipulate structured data
+` openpyxl ` : Python library used by pandas to save to excel
+ 
 
