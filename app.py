@@ -37,6 +37,7 @@ if len(sys.argv) > 1:
 
 # Instantiate a req scraper and extract company data
 scraper = req(loglevel=logging.DEBUG)
+#scraper = req()
 results = scraper.get_companies(company_to_search)
 scraper.save_results_to_csv(company_to_search)
 scraper.save_results_to_json(company_to_search)
